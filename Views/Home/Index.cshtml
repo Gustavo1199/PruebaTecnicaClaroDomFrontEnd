@@ -1,0 +1,121 @@
+﻿@page
+
+@using ClaroDom.Modelos
+@model ClaroDom.Modelos.VistaRegistro
+
+@{
+
+    ModelPagination registrosValues = ViewBag.ListaRegistro as ModelPagination;
+    //Totales varTotales = ViewData["Totales"] as Totales;
+    //DateTime? fechapr = ViewData["Fecha"] as DateTime?;
+}
+<!-- Latest compiled and minified CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+@*<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>*@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+     
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            @*<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+
+                    @Html.ActionLink("Crear Nuevo Registro", "Create", "", null,  new { @class = "nav-link active btn btn-success" })
+                </li>
+            </ul>*@
+        </div>
+    </div>
+</nav>
+
+<div class="">
+
+    @Html.ActionLink("Crear Nuevo Registro", "Create", "", null, new { @class = "nav-link active btn btn-success" })
+</div>
+
+@using (Html.BeginForm("Buscar", "Home", FormMethod.Post))
+{
+
+
+    <div class="container">
+        <label for="forMonto" class="form-label">Buscar</label>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group Centrarbotones">
+
+                    @Html.EditorFor(model => model.id, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
+
+
+                    <button type="submit" class="btn btn-light">Buscar</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<br />
+<div class="container">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Titulo</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Excerpt</th>
+                <th scope="col">Dia de Publicacion</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in registrosValues.Valores)
+            {
+                <tr>
+                    <td>@item.id - @item.title</td>
+
+                    <td>@item.descriptiontemp</td>
+                    <td>@item.excerpttemp</td>
+                    <td>@item.publishDate.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @*<button type="button" class="btn btn-light">Editar</button>*@
+                        @Html.ActionLink("Editar", "Update", "Home",  new { Id = item.id }) |
+                        @Html.ActionLink("Detalle", "Detalles", new { Id = item.id }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { Id = item.id }) |
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+</div>
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+
+    .Centrarbotones {
+        display: inline-flex;
+    }
+</style>
